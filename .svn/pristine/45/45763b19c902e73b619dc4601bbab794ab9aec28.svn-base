@@ -1,0 +1,54 @@
+﻿@model EducacaoConhecimento.Models.Pergunta
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Excluir Pergunta</h2>
+
+<div>
+    <button onclick="document.location.href = 'http://localhost:63623/Pergunta/Index'" type="button" class="btn btn-primary">
+        <span class="glyphicon glyphicon-circle-arrow-left"></span> Voltar
+    </button>
+</div>
+<hr />
+<h3>Tem certeza que deseja excluir esse item?</h3>
+<div>
+    <h4>Pergunta</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Materia.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Materia.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Descricao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descricao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Dificuldade)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dificuldade)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-trash"></span> Excluir</button>
+        </div>
+    }
+</div>

@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace EducacaoConhecimento.Models
+{
+    public class NivelUsuario
+    {
+        public int NivelUsuarioId { get; set; }
+        public string Nome { get; set; }
+        public int PontuacaoInicial { get; set; }
+        public int PontuacaoFinal { get; set; }
+        public int Peso { get; set; }
+    }
+}

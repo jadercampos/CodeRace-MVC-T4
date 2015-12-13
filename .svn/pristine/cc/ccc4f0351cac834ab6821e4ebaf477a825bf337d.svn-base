@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Uma nova Inteligência</h1>
+    <p class="lead">Formada pela criatividade e inovação universitária.</p>
+    @*<p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>*@
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        
+        <h2><img src="~/Images/matematica.jpg" width="40" />Pontuação</h2>
+        <p>
+            Responda todas as perguntas corretamente e junte pontos para avançar de nível. 
+        </p>
+        @*<p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>*@
+    </div>
+    <div class="col-md-4">
+        <h2><img src="~/Images/wallpaper11.jpg" width="40" />Desafios</h2>
+        <p>Seja criativo solucionando novos desafios, ganhe pontos e ajude seus amigos.</p>
+        @*<p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>*@
+    </div>
+    <div class="col-md-4">
+        <h2><img src="~/Images/beca2.jpg" width="40" />ENEM</h2>
+        <p>Adquira a excelência em seu conhecimento para ingressar na faculdade de uma maneira mais fácil.</p>
+        @*<p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>*@
+    </div>
+</div>

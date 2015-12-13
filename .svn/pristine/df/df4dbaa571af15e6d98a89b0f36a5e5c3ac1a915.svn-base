@@ -1,0 +1,110 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="container">
+    <div class="row">
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="4"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="5"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="6"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="7"></li>
+            </ol>
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+                <div class="item active active">
+                    <img src="~/Images/_21-95475779.jpg" width="500" alt="...">
+                    <div class="carousel-caption" style="background-color :rgba(0, 0, 0, 0.4); padding:20px;">
+                        <h3>Hospital Israelita Albert Einstein</h3>
+                        <p>Sistema de Gerenciamento de Laudos Médicos Eletrônicos.</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="/Images/img_livro.jpg" alt="...">
+                    <div class="carousel-caption" style="background-color :rgba(0, 0, 0, 0.4)">
+                        <h3>UNICRED</h3>
+                        <p>Portal e intranet UNICRED.</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="/Images/student-image-2.jpg" width="500" alt="...">
+                    <div class="carousel-caption" style="background-color :rgba(0, 0, 0, 0.4); padding:20px;">
+                        <h3>Profissional VIP</h3>
+                        <p>Portal de profissinais com formato de rede social. Iniciando com foco em profissionais de Saúde, e posteriormente se extendendo para áreas de Turismo, Educação, entre outras.</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="/Images/student-image-2.jpg" alt="...">
+                    <div class="carousel-caption" style="background-color :rgba(0, 0, 0, 0.6)">
+                        <h3>Rally dos Sertões</h3>
+                        <p>Projeto do portal do Rally dos Sertões, sistema de gerenciamento dos sites e mecanismo de inscrição internacional.</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="/Images/student-image-2.jpg" alt="...">
+                    <div class="carousel-caption" style="background-color :rgba(0, 0, 0, 0.4)">
+                        <h3>Micelli</h3>
+                        <p>Sistema para gestão e fiscalização de segurança no trabalho para empresas.</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="/Images/student-image-2.jpg" alt="...">
+                    <div class="carousel-caption" style="background-color :rgba(0, 0, 0, 0.4)">
+                        <h3>FESP-SP</h3>
+                        <p>Sistema de gestão acadêmica.</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="/Images/student-image-2.jpg" alt="...">
+                    <div class="carousel-caption" style="background-color :rgba(0, 0, 0, 0.4)">
+                        <h3>EMTU</h3>
+                        <p>Sistema de gestão de bilhetes e cartões para transporte.</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="/Images/student-image-2.jpg" alt="...">
+                    <div class="carousel-caption" style="background-color :rgba(0, 0, 0, 0.4)">
+                        <h3>Vale Express</h3>
+                        <p>Sistema de gerenciamento de emissão de vales.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+
+        <h2><img src="~/Images/matematica.jpg" width="40" />Pontuação</h2>
+        <p>
+            Responda todas as perguntas corretamente e junte pontos para avançar de nível.
+        </p>
+        @*<p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>*@
+    </div>
+    <div class="col-md-4">
+        <h2><img src="~/Images/wallpaper11.jpg" width="40" />Desafios</h2>
+        <p>Seja criativo solucionando novos desafios, ganhe pontos e ajude seus amigos.</p>
+        @*<p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>*@
+    </div>
+    <div class="col-md-4">
+        <h2><img src="~/Images/beca2.jpg" width="40" />ENEM</h2>
+        <p>Adquira a excelência em seu conhecimento para ingressar na faculdade de uma maneira mais fácil.</p>
+        @*<p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>*@
+    </div>
+</div>

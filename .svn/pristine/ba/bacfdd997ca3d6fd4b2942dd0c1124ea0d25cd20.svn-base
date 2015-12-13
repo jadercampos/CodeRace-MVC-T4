@@ -1,0 +1,62 @@
+﻿@model EducacaoConhecimento.Models.NivelUsuario
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Excluir NivelUsuario</h2>
+
+<div>
+    <button onclick="document.location.href = 'http://localhost:63623/NivelUsuario/Index'" type="button" class="btn btn-primary">
+        <span class="glyphicon glyphicon-circle-arrow-left"></span> Voltar
+    </button>
+</div>
+<hr />
+<h3>Tem certeza que deseja excluir esse item?</h3>
+<div>
+    <h4>NivelUsuario</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PontuacaoInicial)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PontuacaoInicial)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PontuacaoFinal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PontuacaoFinal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Peso)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Peso)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-trash"></span> Excluir</button>
+        </div>
+    }
+</div>

@@ -1,0 +1,50 @@
+﻿@model EducacaoConhecimento.Models.Pergunta
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Detalhes da Pergunta</h2>
+
+<div>
+    <button onclick="document.location.href = 'http://localhost:64087/Pergunta/Index'" type="button" class="btn btn-primary">
+        <span class="glyphicon glyphicon-circle-arrow-left"></span> Voltar
+    </button>
+    <button onclick="document.location.href = 'http://localhost:64087/Pergunta/Edit/'+@Model.PerguntaId" type="button" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span> Editar
+    </button>
+</div>
+<hr />
+<div>
+    <h4>Pergunta</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Materia.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Materia.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Descricao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descricao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Dificuldade)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dificuldade)
+        </dd>
+
+    </dl>
+</div>
+<p>
+</p>

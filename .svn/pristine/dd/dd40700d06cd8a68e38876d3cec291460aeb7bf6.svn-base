@@ -1,0 +1,28 @@
+﻿@model EducacaoConhecimento.Models.IndexViewModel
+@{
+    ViewBag.Title = "Gerenciador";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div>
+    <h4>Mude suas configurações da conta</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Senha:</dt>
+        <dd>
+            [
+            @if (Model.HasPassword)
+            {
+                @Html.ActionLink("Mude sua Senha", "ChangePassword")
+            }
+            else
+            {
+                @Html.ActionLink(" Criar Create", "SetPassword")
+            }
+            ]
+        </dd>
+      
+    </dl>
+</div>

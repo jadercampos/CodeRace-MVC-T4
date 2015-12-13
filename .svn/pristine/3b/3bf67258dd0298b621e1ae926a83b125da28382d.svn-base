@@ -1,0 +1,6 @@
+﻿@{
+    ViewBag.Title = "Quiz";
+}
+<div class="container-fluid">
+    <h1>Teste o seu conhecimento!</h1>
+</div>

@@ -1,0 +1,71 @@
+﻿@model PagedList.IPagedList<EducacaoConhecimento.Models.Pergunta>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Cadastro de Pergunta</h2>
+
+
+<p>
+	<a class="btn btn-primary" href="/Pergunta/Create" role="button"><span class="glyphicon glyphicon-file"></span> Novo</a>
+	<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> Pesquisar</button>
+</p>
+<fieldset>
+    <legend style="font-size:14px">Filtros</legend>
+@using (Html.BeginForm("Index", "Pergunta", FormMethod.Get))
+{
+    <div class="row" style="display:none;">
+        <div class="col-md-6">
+            Palavra-chave: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, htmlAttributes: new { @class = "form-control-custom" }) 
+        </div>
+        <div class="col-md-4">
+            Itens por página: @Html.TextBox("pages", "3", htmlAttributes: new { @class = "form-control-custom", @type = "number", @style = "width:60px" })
+        </div>
+    </div>
+}
+</fieldset>
+<hr />
+<table class="table table-bordered table-hover table-striped">
+    <thead>
+    <tr style="background-color:#ccc">
+        <th>
+			@Html.ActionLink("Materia.Nome", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter, pages = ViewBag.pages }, new { @class = "linkGrid" })
+        </th>
+        <th>
+			@Html.ActionLink("Descricao", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter, pages = ViewBag.pages }, new { @class = "linkGrid" })
+        </th>
+        <th>
+			@Html.ActionLink("Dificuldade", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter, pages = ViewBag.pages }, new { @class = "linkGrid" })
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Materia.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Descricao)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Dificuldade)
+        </td>
+        <td>
+		<a class="btn btn-primary btn-xs" title="Editar" href="/Pergunta/Edit/@item.PerguntaId" role="button"><span class="glyphicon glyphicon-pencil"></span></a>
+		<a class="btn btn-primary btn-xs" title="Consultar" href="/Pergunta/Details/@item.PerguntaId" role="button"><span class="glyphicon glyphicon-list-alt"></span></a>
+		<a class="btn btn-primary btn-xs" title="Excluir" href="/Pergunta/Delete/@item.PerguntaId" role="button"><span class="glyphicon glyphicon-trash"></span></a>
+        </td>
+    </tr>
+}
+    </tbody>
+</table>
+<br />
+Página @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, pages = ViewBag.pages }))

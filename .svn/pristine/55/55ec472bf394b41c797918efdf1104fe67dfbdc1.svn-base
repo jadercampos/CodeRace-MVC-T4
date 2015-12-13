@@ -1,0 +1,11 @@
+﻿namespace EducacaoConhecimento.Models
+{
+    public enum Dificuldade
+    {
+
+        Facil = 1,
+        Moderado = 2,
+        Dificil = 3,
+        Impossivel = 4
+    }
+}

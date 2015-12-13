@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Conceito</h2>
+
+
+<button name="novaPergunta" id="novaPergunta">Nova Pergunta</button>
+<hr />
+
+
+<div id="questionario" style="display:none;">
+    <div id="pergunta"></div>
+    <div id="respostas"></div>
+    <div id="botoes">
+        <button name="responder" type="button">Responder</button>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    $(document).ready(function () {
+
+        $('#novaPergunta').click(function () {
+
+            
+            $.ajax({
+                url: '/Conceito/GetPergunta',
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+
+                    $('#pergunta')
+                    alert(data.Descricao);
+                },
+                error: function () {
+                    
+                }
+            });
+
+
+
+        });
+
+
+
+    });
+
+</script>
+
+}

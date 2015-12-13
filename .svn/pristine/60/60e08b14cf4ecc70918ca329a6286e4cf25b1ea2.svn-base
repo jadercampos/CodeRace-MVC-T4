@@ -1,0 +1,127 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Quizzz</h2>
+
+@Html.Hidden("PerguntaId", null, htmlAttributes: new { @id = "PerguntaId" })
+
+<div id="questionario" style="display:none;">
+    <div id="pergunta"></div>
+    <div id="respostas"></div>
+    <div id="botoes">
+        <button name="responder" id="responder" type="button">Responder</button>
+    </div>
+</div>
+
+<div id="retornoRespostaQuestionario" style="display:none;">
+    <div id="perguntaQuestionario"></div>
+    <div id="respostaQuestionario"></div>
+    <button name="novaProximaPergunta" id="novaProximaPergunta">Próximo Desafio</button>
+</div>
+
+@section Scripts {
+
+    <script>
+    $(document).ready(function () {
+        ProximaPergunta();
+    });
+
+    $(document).on('click', '#responder', function () {
+
+        var pergunta = $('#PerguntaId').val();
+        var escolha = "";
+
+        var temSelecao = false;
+
+        $.each($('.respostas'), function (i, obj) {
+            if (obj.checked) {
+                escolha = $(obj).val();
+                temSelecao = true;
+            }
+        });
+
+        if (temSelecao) {
+
+            $.ajax({
+                url: '/Quiz/VerificarAcerto',
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                data: JSON.stringify({ 'PerguntaId': pergunta, 'RespostaId': escolha }),
+                success: function (data) {
+
+                    $('#perguntaQuestionario').html(data.Pergunta);
+                    $('#respostaQuestionario').html(data.Resposta);
+
+                    if (data.Acertou)
+                    {
+                        $('#respostaQuestionario').attr('style', 'background-color:green;');
+                    }
+                    else
+                    {
+                        $('#respostaQuestionario').attr('style', 'background-color:red;');
+                    }
+
+                    $('#questionario').attr('style', 'display:none;');
+                    $('#retornoRespostaQuestionario').attr('style', 'display:block;');
+                },
+                error: function () {
+
+                }
+            });
+        }
+        else
+        {
+            alert('Selecione uma opção');
+        }
+    });
+
+
+    $('#novaProximaPergunta').click(function () {
+
+        ProximaPergunta();
+
+    });
+
+
+    function ProximaPergunta()
+    {
+        $.ajax({
+            url: '/Quiz/GetPergunta',
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+
+                $('#pergunta').text(data.Descricao);
+                $('#PerguntaId').val(data.PerguntaId);
+
+                var html = "";
+
+                if (data.respostas.length > 0) {
+
+                    html += '<ul>';
+
+                    $.each(data.respostas, function (i, obj) {
+                        if (obj != null) {
+                            html += '<li style="list-style-image:none; display:block;"><input type="radio" name="respostas" class="respostas" value="' + obj.RespostaId + '" />' + obj.Descricao + '</li>';
+                        }
+                    });
+
+                    html += '</ul>';
+                }
+
+                $('#respostas').html(html);
+
+                $('#questionario').attr('style', 'display:block;');
+                $('#retornoRespostaQuestionario').attr('style', 'display:none;');
+            },
+            error: function () {
+
+            }
+        });
+    }
+    </script>
+
+}

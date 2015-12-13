@@ -1,0 +1,334 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section CssHeader {
+    
+}
+
+@Html.Hidden("PerguntaId", null, htmlAttributes: new { @id = "PerguntaId" })
+
+<div class="container-fluid bg-info">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><span class="label label-warning" id="qid"></span> <span id="pergunta">Gerando perguntas rapidamente rápidas...</span></h3>
+            </div>
+            <div class="modal-body">
+                <div class="col-xs-3 col-xs-offset-5">
+                    
+                        <div id="loadbar" style="display: none;" >
+                            <div class="blockG" id="rotateG_01"></div>
+                            <div class="blockG" id="rotateG_02"></div>
+                            <div class="blockG" id="rotateG_03"></div>
+                            <div class="blockG" id="rotateG_04"></div>
+                            <div class="blockG" id="rotateG_05"></div>
+                            <div class="blockG" id="rotateG_06"></div>
+                            <div class="blockG" id="rotateG_07"></div>
+                            <div class="blockG" id="rotateG_08"></div>
+                        </div>
+                    
+                </div>
+
+                <div class="quiz" id="quiz" data-toggle="buttons">
+                    <label class="element-animation1 btn btn-lg btn-primary btn-block"><span class="btn-label"><i class="glyphicon glyphicon-chevron-right"></i></span> <input type="radio" name="q_answer" value="123">1 One</label>
+                    <label class="element-animation2 btn btn-lg btn-primary btn-block"><span class="btn-label"><i class="glyphicon glyphicon-chevron-right"></i></span> <input type="radio" name="q_answer" value="2">2 Two</label>
+                    <label class="element-animation3 btn btn-lg btn-primary btn-block"><span class="btn-label"><i class="glyphicon glyphicon-chevron-right"></i></span> <input type="radio" name="q_answer" value="3">3 Three</label>
+                    <label class="element-animation4 btn btn-lg btn-primary btn-block"><span class="btn-label"><i class="glyphicon glyphicon-chevron-right"></i></span> <input type="radio" name="q_answer" value="4">4 Four</label>
+                </div>
+            </div>
+            <div class="modal-footer text-muted">
+                <span id="answer"></span> <span id="proximaPergunta"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+
+        var ans = 1;
+
+        var loading = $('#loadbar').hide();
+
+        $(document).ready(function () {
+                   
+            $("#quiz").html('');
+            $("#pergunta").html('');
+
+            ProximaPergunta();
+            
+        });
+        
+        $.fn.checking = function (ck) {
+            
+            EnviarResposta(ck);
+
+            if (ck != ans)
+            {            
+                $("#quiz").html('<img src="/Images/button_cancel.png" alt="Errado" /> <span style="color:red;">Resposta Errada</span>');
+                $('#proximaPergunta').html('<button name="novaProximaPergunta" id="novaProximaPergunta" class="btn btn-primary botao-resposta">Próximo Desafio</button>');
+
+                //return 'ERRADO';
+                return '';
+            }                
+            else
+            {
+                $("#quiz").html('<img src="/Images/button_ok.png" alt="Certo" /> <span style="color:green;">Certa Resposta</span>');
+                $('#proximaPergunta').html('<button name="novaProximaPergunta" id="novaProximaPergunta" class="btn btn-primary botao-resposta">Próximo Desafio</button>');
+
+                //return 'CORRETO';
+                return '';
+            }
+                
+        };
+
+        $(document).on('click','label.btn', function () {
+
+            var choice = $(this).find('input:radio').val();
+            $('#loadbar').show();
+            $('#quiz').fadeOut();
+            setTimeout(function () {
+                $("#answer").html($(this).checking(choice));
+                $('#quiz').show();
+                $('#loadbar').fadeOut();
+                /* something else */
+
+            }, 1500);
+        });
+
+
+        function EnviarResposta(ck)
+        {
+            $.ajax({
+                url: '/Quiz/VerificarAcerto',
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                async: false,
+                data: JSON.stringify({ 'PerguntaId': $('#PerguntaId').val(), 'RespostaId': ck }),
+                success: function (data) {
+
+                    
+                    //$('#perguntaQuestionario').html(data.Pergunta);
+
+                    //if (data.Acertou) {
+                    //    $('#conteudoResposta').text('Certa Resposta.');
+                    //    $('#respostaQuestionario').attr('style', 'background-color:green;');
+                    //}
+                    //else {
+                    //    $('#conteudoResposta').text('Resposta Errada.');
+                    //    $('#respostaQuestionario').attr('style', 'background-color:red;');
+                    //}
+
+                    //$('#questionario').attr('style', 'display:none;');
+                    //$('#retornoRespostaQuestionario').attr('style', 'display:block;');
+                },
+                error: function () {
+
+                }
+            });
+        }
+
+
+        function ProximaPergunta() {
+            $('#proximaPergunta').html('');
+            $('#answer').html('');
+            $('#loadbar').show();
+
+            $.ajax({
+                url: '/Quiz/GetPergunta',
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+
+                    $('#pergunta').text(data.Descricao);
+                    $('#PerguntaId').val(data.PerguntaId);
+
+                    //$('#questao-dificuldade').text(data.Dificuldade);
+                    //$('#questao-materia').text(data.MateriaDescricao);
+
+                    var html = "";
+
+                    if (data.respostas.length > 0) {
+
+                        $.each(data.respostas, function (i, obj) {
+                            if (obj != null) {
+                                html += '<label class="element-animation1 btn btn-lg btn-primary btn-block"><span class="btn-label"><i class="glyphicon glyphicon-chevron-right"></i></span> <input type="radio" name="q_answer" value="' + obj.RespostaId + '">' + obj.Descricao + '</label>';
+
+                                if(obj.Correta)
+                                {                                    
+                                    ans = obj.RespostaId;
+                                }
+                            }
+                        });
+                    }
+
+                    $('#quiz').html(html);
+
+                    //$('#questionario').attr('style', 'display:block;');
+                    //$('#retornoRespostaQuestionario').attr('style', 'display:none;');
+                },
+                error: function () {
+
+                },
+                complete: function () {
+                    $('#loadbar').fadeOut();
+                }
+            });
+        }
+
+        $('#proximaPergunta').click(function () {
+
+            ProximaPergunta();
+
+        });
+        
+        
+
+    </script>
+}
+
+
+@*<h2>Quizzz</h2>
+
+    @Html.Hidden("PerguntaId", null, htmlAttributes: new { @id = "PerguntaId" })
+
+    <div id="wrapper">
+        <div id="conteudo">
+            <div id="questionario" style="display:none;">
+                <div>
+                    <p>
+                        Dificuldade: <span id="questao-dificuldade"></span> Materia: <span id="questao-materia"></span>
+                    </p>
+                </div>
+                <div id="pergunta"></div>
+                <div id="respostas"></div>
+                <div id="botoes">
+                    <button name="responder" id="responder" type="button" class="btn btn-success botao-resposta">Responder</button>
+                </div>
+            </div>
+
+            <div id="retornoRespostaQuestionario" style="display:none;">
+                <div id="perguntaQuestionario"></div>
+                <div id="respostaQuestionario"><span id="conteudoResposta" /></div>
+                <button name="novaProximaPergunta" id="novaProximaPergunta" class="btn btn-success botao-resposta">Próximo Desafio</button>
+            </div>
+        </div>
+        <div id="lateral">
+            <ul>
+                <li>Pontuação</li>
+            </ul>
+        </div>
+        <div class="clear-linha"></div>
+    </div>
+    @section Scripts {
+
+        <script>
+        $(document).ready(function () {
+            ProximaPergunta();
+        });
+
+        $(document).on('click', '#responder', function () {
+
+            var pergunta = $('#PerguntaId').val();
+            var escolha = "";
+
+            var temSelecao = false;
+
+            $.each($('.respostas'), function (i, obj) {
+                if (obj.checked) {
+                    escolha = $(obj).val();
+                    temSelecao = true;
+                }
+            });
+
+            if (temSelecao) {
+
+                $.ajax({
+                    url: '/Quiz/VerificarAcerto',
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: 'json',
+                    data: JSON.stringify({ 'PerguntaId': pergunta, 'RespostaId': escolha }),
+                    success: function (data) {
+
+                        $('#perguntaQuestionario').html(data.Pergunta);
+
+                        if (data.Acertou)
+                        {
+                            $('#conteudoResposta').text('Certa Resposta.');
+                            $('#respostaQuestionario').attr('style', 'background-color:green;');
+                        }
+                        else
+                        {
+                            $('#conteudoResposta').text('Resposta Errada.');
+                            $('#respostaQuestionario').attr('style', 'background-color:red;');
+                        }
+
+                        $('#questionario').attr('style', 'display:none;');
+                        $('#retornoRespostaQuestionario').attr('style', 'display:block;');
+                    },
+                    error: function () {
+
+                    }
+                });
+            }
+            else
+            {
+                alert('Selecione uma opção');
+            }
+        });
+
+
+        $('#novaProximaPergunta').click(function () {
+
+            ProximaPergunta();
+
+        });
+
+
+        function ProximaPergunta()
+        {
+            $.ajax({
+                url: '/Quiz/GetPergunta',
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+
+                    $('#pergunta').text(data.Descricao);
+                    $('#PerguntaId').val(data.PerguntaId);
+
+                    $('#questao-dificuldade').text(data.Dificuldade);
+                    $('#questao-materia').text(data.MateriaDescricao);
+
+
+                    var html = "";
+
+                    if (data.respostas.length > 0) {
+
+                        html += '<ul>';
+
+                        $.each(data.respostas, function (i, obj) {
+                            if (obj != null) {
+                                html += '<li style="list-style-image:none; display:block;"><input type="radio" name="respostas" class="respostas" value="' + obj.RespostaId + '" />' + obj.Descricao + '</li>';
+                            }
+                        });
+
+                        html += '</ul>';
+                    }
+
+                    $('#respostas').html(html);
+
+                    $('#questionario').attr('style', 'display:block;');
+                    $('#retornoRespostaQuestionario').attr('style', 'display:none;');
+                },
+                error: function () {
+
+                }
+            });
+        }
+        </script>
+
+    }*@

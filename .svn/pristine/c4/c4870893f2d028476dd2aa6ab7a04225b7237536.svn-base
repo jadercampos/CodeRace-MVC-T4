@@ -1,0 +1,58 @@
+﻿@model EducacaoConhecimento.Models.NivelUsuario
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Detalhes da NivelUsuario</h2>
+
+<div>
+    <button onclick="document.location.href = 'http://localhost:64087/NivelUsuario/Index'" type="button" class="btn btn-primary">
+        <span class="glyphicon glyphicon-circle-arrow-left"></span> Voltar
+    </button>
+    <button onclick="document.location.href = 'http://localhost:64087/NivelUsuario/Edit/'+@Model.NivelUsuarioId" type="button" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span> Editar
+    </button>
+</div>
+<hr />
+<div>
+    <h4>NivelUsuario</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PontuacaoInicial)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PontuacaoInicial)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PontuacaoFinal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PontuacaoFinal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Peso)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Peso)
+        </dd>
+
+    </dl>
+</div>
+<p>
+</p>

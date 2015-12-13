@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace EducacaoConhecimento.Models
+{
+    public class Profile
+    {
+        public string CodUsuario { get; set; }
+        public int Pontuacao { get; set; }
+        public string Avatar { get; set; }
+        public int NivelUsuarioId { get; set; }
+        public virtual NivelUsuario NivelUsuario { get; set; }
+    }
+}

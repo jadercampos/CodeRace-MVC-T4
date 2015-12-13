@@ -1,0 +1,72 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using EducacaoConhecimento.Models;
+using EducacaoConhecimento.Helpers;
+
+namespace EducacaoConhecimento.Controllers
+{
+    public class QuizController : Controller
+    {
+        ApplicationDbContext db = new ApplicationDbContext();
+
+        // GET: Quiz
+        [Authorize]
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult VerificarAcerto(int PerguntaId, int RespostaId)
+        {
+            var retorno = new RetornoDTO();
+            var resposta = db.Resposta.Where(x => x.PerguntaId == PerguntaId && x.RespostaId == RespostaId).FirstOrDefault();
+
+            //retorno.Pergunta = resposta.Pergunta.Descricao;
+            //retorno.Resposta = resposta.Descricao;
+            //retorno.Acertou = resposta.Correta;
+            
+            
+            retorno.Pontuacao = 10;
+
+            return Json(retorno, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult GetPergunta()
+        {
+             var perguntaDTO = new PerguntaDTO();
+
+             var obj = db.Pergunta.OrderBy(x => Guid.NewGuid()).FirstOrDefault();
+             if (obj != null)
+             {
+                 perguntaDTO.PerguntaId = obj.PerguntaId;
+                 perguntaDTO.Descricao = obj.Descricao;
+                 perguntaDTO.MateriaId = obj.MateriaId;
+                 perguntaDTO.MateriaDescricao = obj.Materia.Nome;
+                 perguntaDTO.Dificuldade = obj.Dificuldade.ToDescription();
+
+                 perguntaDTO.respostas = new List<RespostaDTO>();
+                 foreach (var item in db.Resposta.Where(x => x.PerguntaId == obj.PerguntaId).ToList())
+                 {
+                     var resposta = new RespostaDTO()
+                     {
+                         RespostaId = item.RespostaId,
+                         Descricao = item.Descricao,
+                         Correta = item.Correta
+                     };
+
+                     perguntaDTO.respostas.Add(resposta);
+                 }
+                 
+             }
+
+            return Json(perguntaDTO, JsonRequestBehavior.AllowGet);
+
+        }
+
+    }
+}
